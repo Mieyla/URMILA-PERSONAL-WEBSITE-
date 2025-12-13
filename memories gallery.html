@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Urmila's Personal Website | Library</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Georgia", serif;
+    }
+
+    body {
+        background: url("image1.jpg") no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        text-align: center;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #7a1f1f;
+        padding: 20px 60px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .logo {
+        font-size: 30px;
+        font-weight: bold;
+        color: white;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    nav {
+        display: flex;
+        gap: 28px;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        font-size: 15px;
+        transition: .3s;
+    }
+
+    nav a:hover {
+        color: gold;
+        border-bottom: 2px solid black;
+    }
+
+    h1 {
+        font-size: 40px;
+        margin: 80px 0 70px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    }
+
+    /* TYPEWRITER */
+    .word {
+        opacity: 0;
+        transform: translateY(20px);
+        display: inline-block;
+        animation: typeWord 0.8s forwards;
+    }
+
+    .word:nth-child(1) { animation-delay: 0.2s; }
+    .word:nth-child(2) { animation-delay: 1.2s; }
+
+    @keyframes typeWord {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* GALLERY LIST */
+    .gallery-list {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .gallery-item {
+        display: flex;
+        background: #7a1f1f;
+        border-radius: 15px;
+        padding: 12px;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        transition: transform .3s;
+    }
+
+    .gallery-item:hover {
+        transform: scale(1.02);
+    }
+
+    .gallery-item img {
+        width: 300px;
+        height: 230px;
+        object-fit: cover;
+        border: 8px solid #fff;
+        border-radius: 5px;
+        margin-right: 20px;
+    }
+
+    .gallery-item p {
+        font-size: 16px;
+        text-align: left;
+        line-height: 1.6;
+    }
+
+    /* BACK BUTTON */
+    .back-container {
+        margin: 50px 0 20px;
+        text-align: center;
+    }
+
+    .back-btn {
+        display: inline-block;
+        padding: 12px 40px;
+        background-color: #7a1f1f;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 30px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        transition: .3s;
+    }
+
+    .back-btn:hover {
+        background-color: gold;
+        color: black;
+        transform: translateY(-3px);
+    }
+
+    /* RESPONSIVE */
+    @media screen and (max-width: 900px) {
+        .gallery-item {
+            flex-direction: column;
+        }
+
+        .gallery-item img {
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+
+        .gallery-item p {
+            text-align: center;
+        }
+    }
+
+    footer {
+        background-color: rgba(0,0,0,0.8);
+        padding: 12px;
+        font-size: 13px;
+        margin-top: auto;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">
+    <div class="logo">URMILA'S PERSONAL WEBSITE</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="aboutme.html">About Me</a>
+        <a href="family.html">Family</a>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="friends.html">Friends</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="favourite.html">Favourite</a>
+    </nav>
+</div>
+
+<main>
+    <h1>
+        <span class="word">famous</span>
+        <span class="word">memory.~`</span>
+    </h1>
+
+    <div class="gallery-list">
+        <div class="gallery-item">
+            <img src="mem1.jpg">
+            <p>At the 17th FESKO program, I had the incredible opportunity to become a VIP for the talk session...</p>
+        </div>
+
+        <div class="gallery-item">
+            <img src="mem2.jpg">
+            <p>I had the amazing opportunity to attend the NCT Dream concert “THE DREAM SHOW 2: IN A DREAM”...</p>
+        </div>
+
+        <div class="gallery-item">
+            <img src="mem3.jpg">
+            <p>This was our very first trip out together, and it was truly unforgettable...</p>
+        </div>
+
+        <div class="gallery-item">
+            <img src="mem4.jpg">
+            <p>After completing the biggest program at UiTM Kelantan, we had a calm and cozy meal together...</p>
+        </div>
+    </div>
+
+    <!-- BACK BUTTON -->
+    <div class="back-container">
+        <a href="gallery.html" class="back-btn"> Back </a>
+    </div>
+</main>
+
+<footer>
+    © 2025 Educational Purpose | Urmila As Shyiken Sanusi |
+    Malaysia Time: <span id="malaysia-time"></span>
+</footer>
+
+<script>
+    function updateTime() {
+        const now = new Date().toLocaleTimeString('en-US', {
+            timeZone: 'Asia/Kuala_Lumpur',
+            hour12: false
+        });
+        document.getElementById('malaysia-time').textContent = now;
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+</script>
+
+</body>
+</html>

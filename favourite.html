@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Urmila's Personal Website | Favourite</title>
+
+<style>
+/* Global Settings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Georgia", serif;
+}
+
+body {
+    background: url("image1.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Top Navigation Bar */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #7a1f1f;
+    padding: 18px 60px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+
+nav {
+    display: flex;
+    gap: 28px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+}
+
+nav a:hover {
+    color: gold;
+    transform: scale(1.1);
+}
+
+/* Title */
+h1 {
+    font-size: 45px;
+    margin-top: 110px;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+}
+
+.word {
+    opacity: 0;
+    transform: translateY(20px);
+    display: inline-block;
+    animation: typeWord .8s forwards;
+}
+
+.word:nth-child(1) { animation-delay: 0.2s; }
+.word:nth-child(2) { animation-delay: 1s; }
+
+@keyframes typeWord {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Subtitle Description */
+.subtitle {
+    font-size: 13px;
+    width: 80%;
+    margin: 0 auto 50px auto;
+    color: #f9f9f9;
+    text-align: center;
+    line-height: 1.7;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* Video Section */
+.video-container {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 55px;
+    padding-bottom: 60px;
+}
+
+.video-box {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    background: #ffffffcc;
+    padding: 28px;
+    border-radius: 14px;
+    border: 5px solid #7a1f1f;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.reverse {
+    flex-direction: row-reverse;
+}
+
+video {
+    width: 300px;
+    max-width: 100%;
+    border-radius: 12px;
+    border: 4px solid #7a1f1f;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+.info-box {
+    width: 100%;
+    text-align: justify;
+}
+
+.info-box h3 {
+    font-size: 28px;
+    color: #7a1f1f;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.info-box p {
+    font-size: 10px;
+    line-height: 1.8;
+    color: black;
+}
+
+footer {
+    background-color: rgba(0,0,0,0.8);
+    padding: 12px;
+    text-align: center;
+    font-size: 13px;
+    margin-top: 28px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<div class="top-bar">
+    <div class="logo">URMILA'S PERSONAL WEBSITE</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="aboutme.html">About Me</a>
+        <a href="family.html">Family</a>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="friends.html">Friends</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="favourite.html" style="color: gold;">Favourite</a>
+    </nav>
+</div>
+
+<!-- MAIN CONTENT -->
+<main>
+    <h1>
+        <span class="word">MY</span>
+        <span class="word">FAVOURITE</span>
+    </h1>
+
+    <p class="subtitle">
+        Here are my favourite things that make me the happiest — from the music I love,
+        the colours that brighten my day, the drinks that comfort me, and the shows that inspire me.
+        Feel free to click the videos and explore my world! ✨💛
+    </p>
+
+    <div class="video-container">
+
+        <!-- Video Blocks (Your original content kept) -->
+        <!-- Just copy your 6 full video + text content blocks exactly here (unchanged) -->
+
+        <!-- I inserted only FIRST BLOCK as example; paste remaining below -->
+        <div class="video-box">
+            <video><source src="video5.mp4" type="video/mp4"></video>
+            <div class="info-box">
+                <h3>FIRST LOVE</h3>
+                <p>This K-pop boy band holds a very special place in my heart because they were the first group I ever truly loved. Their name is NCT DREAM, and being part of their fandom, known as NCTzen, feels like joining a big, supportive friend. What captured my attention wasn’t just their music, but the way they express themselves full of energy, passion, and sincerity. Every performance they do feels meaningful, and their songs always manage to lift my mood, whether I’m feeling happy, stressed, or overwhelmed. Their personalities are charming, their bond is strong, and watching them grow together over the years makes me admire them even more. Becoming an NCTzen has brought so much joy into my life. I’ve discovered new friends through the fandom, learned more about Korean culture, and found comfort in their music during tough days. NCT DREAM gave me a sense of excitement that I can’t put into words, and they continue to inspire me with their hard work and dedication.</p>
+                </div> 
+            </div> 
+
+            <div class="video-box reverse"> <video><source src="video4.mp4" type="video/mp4"></video> <div class="info-box"> 
+                <h3>Most Loved Colour</h3> 
+                <p>This video reflects the colour that means the most to me—yellow, a shade that has captured my heart in the sweetest way. There’s something incredibly uplifting about this colour; it shines with warmth, joy, and a brightness that instantly brings comfort to my emotions. Yellow reminds me of sunlight on a peaceful morning, the kind of light that gently wakes your spirit and fills your day with hope. Whenever I see this colour, I feel a sense of calm and happiness spreading through me. It gives me a burst of good energy, like a little spark that lifts my mood and makes everything feel lighter. Yellow has a softness that soothes the mind, yet it’s vibrant enough to make life feel exciting and full of possibilities. It’s a colour that encourages positivity, confidence, and the courage to keep going even when things feel tough. Yellow isn’t just a favourite colour; it’s a feeling, a moment of peace, and a reminder that happiness can be found in the simplest things around us.</p> </div> 
+            </div> 
+
+             <div class="video-box"> <video><source src="video3.mp4" type="video/mp4"></video> <div class="info-box"> 
+                    <h3>ALPHA DRIVE ONE TO THE TOP</h3> 
+                    <p>.I became interested in this boyband because their concept is truly different from anything I’ve seen before. The group is called Alpha Drive One, but fans lovingly shorten it to ALD1, which gives them such a bold and futuristic identity. Even though they only debuted two months ago, their presence already feels powerful and refreshing, as if they came into the K-pop scene with a mission to stand out. What draws me in even more is the incredible energy they bring to their performances. Each comeback and stage has a strong charm, but one member in particular, Anxin, completely captured my attention. His expressions, style, and charisma made me feel something so intense that I couldn’t ignore it. Every time he appears on screen, I find myself getting pulled deeper into their world. Their fandom name, Allyz, makes everything even more meaningful. The name feels warm, elegant, and empowering—it carries a soft, classy vibe that perfectly represents what the fans mean to the group. It gives us a beautiful identity, like we’re part of something special and connected. Being an Allyz feels comforting, as if we’re a family supporting ALD1 on every step of their journey. Even though they are still new, Alpha Drive One has already made a strong impact on me. Their concept, their passion, and the feelings they inspire are unforgettable. I’m excited to see how far they’ll go, and I’m proud to be an Allyz from the very beginning.</p> </div> 
+                </div> 
+
+            <div class="video-box reverse"> <video><source src="video2.mp4" type="video/mp4"></video> <div class="info-box"> 
+                    <h3>Sip of Joy: Jasmine Green Tea</h3> 
+                    <p>Jasmine green tea isn’t just a drink to me it’s a small piece of joy, a moment of calmness, and a flavor that always brings beauty into my day. The aroma makes every sip feel special, giving the drink a soothing and refreshing character that I adore. The taste itself is so delicate yet memorable, capturing my heart in a way that no other drink can. It has a smoothness that relaxes me and a light sweetness that makes me feel comforted every time I drink it. One thing I love the most is how perfectly jasmine green tea pairs with cooler fruit flavors. When combined, they create a refreshing balance that feels uplifting and pure. It’s the kind of drink that never fails to brighten my mood, no matter what kind of day I’m having.</p> </div> 
+                </div> 
+
+            <div class="video-box"> <video><source src="video1.mp4" type="video/mp4"></video> <div class="info-box"> 
+                    <h3>My Comfort Dessert</h3> 
+                    <p>I absolutely adore burnt cheesecake, and it has become one of my all-time favorite desserts. Every time a bite of it melts in my mouth, it feels like a moment of pure perfection, almost as if the flavor was made just for me. The soft, creamy center mixed with the slightly caramelized top creates a taste that is unforgettable and deeply comforting. What makes this cake even more special is the way its ingredients blend so naturally to create such a rich and beautiful flavor. The simplicity of cream cheese, sugar, and eggs turns into something incredibly indulgent, giving the cake its smooth texture and warm aroma. I truly appreciate how each ingredient adds its own charm, making every slice feel luxurious without being overwhelming. I also love that burnt cheesecake doesn’t need a lot of decoration to shine. A minimal look suits it perfectly—simple on the outside, but bursting with goodness the moment you taste it. The elegance of its rustic appearance makes me love it even more, because it proves that something doesn’t need fancy toppings to be absolutely delicious.</p> </div>
+                    </div> 
+
+            <div class="video-box reverse"> <video><source src="video6.mp4" type="video/mp4"></video> <div class="info-box"> 
+                    <h3>All-Time</h3>
+                    <p>Watching the cartoon Winx has always been one of my greatest joys because it carries a magical fairytale atmosphere that makes every episode feel alive. The show presents a world filled with bravery, friendship, and challenges that push the characters to grow stronger. Every scene flows in a way that helps me quickly understand the direction of the story, making it easy to stay engaged from start to finish. The battles, the adventure, and the values behind each mission create a story that feels inspiring and full of spirit. Among all the characters, the one who captures my heart the most is Musa. Her personality reflects elegance, discipline, and emotional depth that make her stand out beautifully. She carries herself with confidence and calmness, while still showing strength in difficult situations. Her style, her attitude, and her determination make every moment with her on screen enjoyable. Musa is the reason the series feels even more special to me, and her presence adds a unique charm that makes the whole Winx world unforgettable.</p>
+    </div>
+</main>
+
+<footer>
+    &copy; @ 2025 This website is for educational purposes only | Urmila As Shyiken Sanusi | Malaysia Time: <span id="malaysia-time"></span>
+</footer>
+
+<script>
+    // Malaysia Time
+    function updateTime() {
+        const options = { timeZone: 'Asia/Kuala_Lumpur', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        const now = new Date().toLocaleTimeString('en-US', options);
+        document.getElementById('malaysia-time').textContent = now;
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+</script>
+
+<script>
+// Video Play/Pause Logic
+const videos = document.querySelectorAll("video");
+let playing = null;
+
+videos.forEach(v => {
+    v.removeAttribute("controls");
+    v.currentTime = 1;
+
+    v.addEventListener("click", () => {
+        if (playing && playing !== v) playing.pause();
+        v.paused ? (v.play(), playing = v) : v.pause();
+    });
+});
+</script>
+
+</body>
+</html>

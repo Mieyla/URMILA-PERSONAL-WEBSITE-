@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Favourite — Little Bird Forest Game</title>
+  <style>
+    :root{--bg:#FFF7E6;--forest:#9ecf9e;--ground:#6b4f2f;--bird:#ffdd57;--log:#8b5a2b}
+    html,body{height:100%;margin:0;font-family:Centaur, serif;background:linear-gradient(180deg,#dff7e6 0%, #d8f0e4 40%, #fff7e6 100%)}
+    header{background:#7a1f1f;color:#fff;padding:18px 20px;font-size:24px;font-weight:700;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+    nav{background:var(--bg);display:flex;gap:12px;padding:10px;justify-content:center;border-bottom:3px solid #7a1f1f}
+    nav a{color:#7a1f1f;text-decoration:none;font-weight:700;padding:8px 12px;border-radius:8px}
+    main{display:flex;gap:30px;padding:28px;align-items:flex-start;justify-content:center}
+
+    /* GAME CARD */
+    .game-card{background:white;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.12);padding:18px;max-width:1100px;width:100%;display:flex;gap:20px}
+    .stage-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:12px}
+    canvas{background:linear-gradient(180deg,#a9e3a9 0%, #79c06f 50%, #6bb463 100%);border-radius:10px;border:6px solid #3f7a3f;box-shadow:inset 0 -30px 40px rgba(0,0,0,.06);}
+
+    /* HUD */
+    .hud{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:840px}
+    .score{font-weight:700;color:#7a1f1f}
+    .controls{font-size:14px;color:#4b1e1e}
+
+    /* Description */
+    .info{width:360px;min-width:300px}
+    .info h2{color:#7a1f1f;margin-top:0}
+    .info p{line-height:1.6;text-align:justify}
+    .big-btn{display:inline-block;margin-top:12px;background:#7a1f1f;color:#fff;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:700}
+
+    footer{background:#7a1f1f;color:#fff;padding:12px;margin-top:20px;text-align:center}
+
+    /* small mobile touch buttons */
+    .touch-controls{display:flex;gap:8px;margin-top:6px}
+    .touch-controls button{padding:10px 12px;border-radius:8px;border:2px solid #7a1f1f;background:transparent;color:#7a1f1f;font-weight:700}
+
+    @media(max-width:900px){main{padding:12px;flex-direction:column;align-items:center}.info{width:100%;min-width:unset}}
+  </style>
+</head>
+<body>
+  <header>URMILA'S PERSONAL WEBSITE — GAME</header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="favourite.html">Favourite</a>
+    <a href="#">Game</a>
+  </nav>
+
+  <main>
+    <div class="game-card">
+      <div class="stage-wrap">
+        <div class="hud">
+          <div class="score">Score: <span id="score">0</span></div>
+          <div class="controls">Lives: <span id="lives">3</span></div>
+        </div>
+
+        <canvas id="game" width="840" height="420" aria-label="Little Bird Forest game"></canvas>
+
+        <div style="display:flex;gap:8px;align-items:center;flex-direction:column;width:100%;max-width:840px">
+          <div style="display:flex;justify-content:space-between;width:100%">
+            <button id="startBtn" class="big-btn">Start / Restart</button>
+            <div style="text-align:right">Status: <span id="status">Ready</span></div>
+          </div>
+
+          <div class="touch-controls" aria-hidden="false">
+            <button id="leftBtn">◀️ Left</button>
+            <button id="rightBtn">▶️ Right</button>
+            <button id="jumpBtn">⤴️ Jump</button>
+            <button id="rollBtn">↷ Roll</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="info">
+        <h2>Little Bird — Forest Walk</h2>
+        <p><strong>Game description:</strong> You're a small curious bird wandering through a friendly forest. Walk, hop and roll to avoid wooden logs that block the path. The view is side-scrolling: the bird can move forwards and backwards, jump to clear obstacles, and roll to slip under low logs. Each log you pass increases your score. Survive as long as you can — the forest becomes busier and the game speeds up over time.</p>
+
+        <p><strong>Controls</strong><br>
+        Keyboard: ← / A = move left, → / D = move right, Space / W / ↑ = jump, S / ↓ = roll (hold to stay rolled).<br>
+        Mobile: use the touch buttons below the canvas.</p>
+
+        <p><strong>Mechanics</strong>: The bird has simple physics (gravity & jump velocity). Jumping gives vertical lift; rolling reduces collision height for a short time. Logs come from the right and move left; some logs are high (must roll under), others are low (must jump over). Colliding with a log costs one life. Lose all lives and the game ends.</p>
+
+        <p><strong>Goal</strong>: Get the highest score by passing logs. The game gradually increases in difficulty.</p>
+
+        <a id="howto" class="big-btn" href="#">How to Play</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>&copy; 2025 This website is for educational purposes only | Urmila As Shyiken Sanusi</footer>
+
+  <script>
+    // Simple side-scroller game implementation
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const livesEl = document.getElementById('lives');
+    const statusEl = document.getElementById('status');
+    const startBtn = document.getElementById('startBtn');
+
+    const leftBtn = document.getElementById('leftBtn');
+    const rightBtn = document.getElementById('rightBtn');
+    const jumpBtn = document.getElementById('jumpBtn');
+    const rollBtn = document.getElementById('rollBtn');
+
+    let keys = {};
+    let game = null;
+
+    // Game state
+    function createGame(){
+      return {
+        bird: {x:120,y:260,w:48,h:48,vy:0,ground:300,rolling:false,rollTimer:0},
+        logs: [],
+        spawnTimer:0,
+        spawnInterval:120,
+        speed:3,
+        score:0,
+        lives:3,
+        over:false,
+      }
+    }
+
+    function reset(){
+      game = createGame();
+      scoreEl.textContent = game.score;
+      livesEl.textContent = game.lives;
+      statusEl.textContent = 'Playing';
+    }
+
+    function start(){
+      reset();
+      if(window.animationId) cancelAnimationFrame(window.animationId);
+      loop();
+    }
+
+    startBtn.addEventListener('click', ()=>start());
+
+    // Input
+    window.addEventListener('keydown', e=>{ keys[e.key.toLowerCase()] = true });
+    window.addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false });
+
+    leftBtn.addEventListener('pointerdown', ()=>keys['arrowleft']=true);
+    leftBtn.addEventListener('pointerup', ()=>keys['arrowleft']=false);
+    rightBtn.addEventListener('pointerdown', ()=>keys['arrowright']=true);
+    rightBtn.addEventListener('pointerup', ()=>keys['arrowright']=false);
+    jumpBtn.addEventListener('pointerdown', ()=>keys[' ']=true);
+    jumpBtn.addEventListener('pointerup', ()=>keys[' ']=false);
+    rollBtn.addEventListener('pointerdown', ()=>keys['s']=true);
+    rollBtn.addEventListener('pointerup', ()=>keys['s']=false);
+
+    // Helper: rectangle collision
+    function rectsCollide(a,b){
+      return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+    }
+
+    function spawnLog(){
+      // choose type: low (jump) or high (roll)
+      const type = Math.random()<0.5? 'low' : 'high';
+      if(type === 'low'){
+        // low log sits on ground
+        game.logs.push({x:canvas.width+40,y:game.bird.ground+8,w:80,h:40,type:'low',passed:false});
+      } else {
+        // high log with gap below to roll
+        game.logs.push({x:canvas.width+40,y:game.bird.ground-80,w:80,h:40,type:'high',passed:false});
+      }
+    }
+
+    function update(){
+      if(!game || game.over) return;
+
+      // difficulty ramp
+      if(game.score && game.score % 10 === 0 && game.spawnInterval > 55){
+        // slowly increase speed and spawn frequency
+        game.speed = 3 + Math.floor(game.score/20);
+        game.spawnInterval = Math.max(55, 120 - Math.floor(game.score/5));
+      }
+
+      // bird controls
+      const left = keys['arrowleft'] || keys['a'];
+      const right = keys['arrowright'] || keys['d'];
+      const jump = keys[' '] || keys['w'] || keys['arrowup'];
+      const roll = keys['s'] || keys['arrowdown'];
+
+      // horizontal movement
+      if(left) game.bird.x = Math.max(12, game.bird.x - 4);
+      if(right) game.bird.x = Math.min(canvas.width - game.bird.w - 12, game.bird.x + 4);
+
+      // jump (only if on ground)
+      const onGround = Math.abs((game.bird.y + game.bird.h) - (game.bird.ground + game.bird.h)) < 0.1 || game.bird.y >= game.bird.ground;
+      if(jump && onGround){ game.bird.vy = -10; }
+
+      // rolling
+      if(roll && onGround){ game.bird.rolling = true; game.bird.rollTimer = 30; }
+      if(game.bird.rollTimer>0){ game.bird.rollTimer--; } else { game.bird.rolling = false; }
+
+      // gravity
+      game.bird.vy += 0.5; game.bird.y += game.bird.vy;
+      if(game.bird.y >= game.bird.ground){ game.bird.y = game.bird.ground; game.bird.vy = 0; }
+
+      // spawn logs
+      game.spawnTimer++;
+      if(game.spawnTimer >= game.spawnInterval){ spawnLog(); game.spawnTimer = 0; }
+
+      // move logs and collision
+      for(let i=game.logs.length-1;i>=0;i--){
+        const log = game.logs[i];
+        log.x -= game.speed;
+        // remove off-screen
+        if(log.x + log.w < -40){ game.logs.splice(i,1); continue; }
+
+        // scoring: when log passes bird
+        if(!log.passed && log.x + log.w < game.bird.x){ log.passed = true; game.score++; scoreEl.textContent = game.score; }
+
+        // collision box for bird depends on roll
+        const birdBox = {
+          x: game.bird.x,
+          y: game.bird.y + (game.bird.rolling? 18 : 0),
+          w: game.bird.w,
+          h: game.bird.h - (game.bird.rolling? 18 : 0)
+        };
+
+        const logBox = {x:log.x,y:log.y,w:log.w,h:log.h};
+
+        if(rectsCollide(birdBox, logBox)){
+          // if collision occurs and types mismatch (i.e. low log hits bird when rolling? etc)
+          // reduce life and knockback
+          game.lives--; livesEl.textContent = game.lives;
+          game.logs.splice(i,1);
+          // small knockback
+          game.bird.x = Math.max(12, game.bird.x - 40);
+          if(game.lives <= 0){ game.over = true; statusEl.textContent = 'Game Over'; }
+        }
+      }
+    }
+
+    function draw(){
+      // clear
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      // background decorations: sun & distant trees
+      // sun
+      ctx.fillStyle = '#fff1a8'; ctx.beginPath(); ctx.arc(740,60,40,0,Math.PI*2); ctx.fill();
+      // distant trunks
+      for(let i=0;i<6;i++){ ctx.fillStyle = '#2f6b3a'; ctx.fillRect(i*140+20,40,18,160); ctx.fillStyle='#2b5f35'; ctx.beginPath(); ctx.ellipse(i*140+30,40,60,36,0,0,Math.PI*2); ctx.fill(); }
+
+      // ground
+      ctx.fillStyle = 'rgba(107,69,47,1)'; ctx.fillRect(0, game.bird.ground + game.bird.h, canvas.width, canvas.height - (game.bird.ground + game.bird.h));
+
+      // logs
+      for(const log of game.logs){
+        ctx.fillStyle = 'rgba(139,90,43,1)';
+        // wooden texture: rectangle + darker ends
+        ctx.fillRect(log.x, log.y, log.w, log.h);
+        ctx.fillStyle = 'rgba(114,60,26,1)'; ctx.fillRect(log.x, log.y, 6, log.h); ctx.fillRect(log.x+log.w-6, log.y, 6, log.h);
+        // rings
+        ctx.fillStyle = 'rgba(255,255,255,0.06)';
+        ctx.beginPath(); ctx.ellipse(log.x + log.w/2, log.y + log.h/2, 12, 8, 0, 0, Math.PI*2); ctx.fill();
+      }
+
+      // bird (drawn as a cute circle + wing)
+      const b = game.bird;
+      // bird body
+      ctx.save();
+      ctx.translate(b.x + b.w/2, b.y + b.h/2);
+      // tilt when moving
+      let tilt = 0;
+      if((keys['arrowright']||keys['d'])) tilt = 0.15; if((keys['arrowleft']||keys['a'])) tilt = -0.15;
+      ctx.rotate(tilt);
+      // body
+      ctx.fillStyle = 'rgba(255,221,87,1)'; ctx.beginPath(); ctx.ellipse(0,0,22,18,0,0,Math.PI*2); ctx.fill();
+      // eye
+      ctx.fillStyle = '#2b2b2b'; ctx.beginPath(); ctx.arc(8,-2,3,0,Math.PI*2); ctx.fill();
+      // beak
+      ctx.fillStyle = '#ff9a2e'; ctx.beginPath(); ctx.moveTo(18,0); ctx.lineTo(28,-6); ctx.lineTo(18,6); ctx.closePath(); ctx.fill();
+      // wing (animated)
+      const wingY = Math.sin(Date.now()/120)*6;
+      ctx.fillStyle = '#f2c94c'; ctx.beginPath(); ctx.ellipse(-6,wingY,10,6,Math.PI/6,0,Math.PI*2); ctx.fill();
+
+      ctx.restore();
+
+      // if rolling, draw a small shadow to indicate crouch
+      if(b.rolling){ ctx.fillStyle='rgba(0,0,0,0.08)'; ctx.fillRect(b.x+4, b.y + b.h - 6, b.w-8, 6); }
+
+      // HUD small hint
+      ctx.fillStyle = 'rgba(255,255,255,0.06)'; ctx.fillRect(6,6,140,34);
+      ctx.fillStyle = '#fff'; ctx.font = '600 16px sans-serif'; ctx.fillText('Score: '+game.score, 18,28);
+    }
+
+    function loop(){
+      update(); draw();
+      if(game && !game.over) window.animationId = requestAnimationFrame(loop);
+    }
+
+    // collision detection test passed -> show initial frame
+    reset(); draw();
+
+    // keyboard-friendly: map spacebar properly
+    window.addEventListener('keydown', function(e){ if(e.code==='Space'){ e.preventDefault(); keys[' ']=true; } });
+    window.addEventListener('keyup', function(e){ if(e.code==='Space'){ keys[' ']=false; } });
+
+  </script>
+</body>
+</html>
